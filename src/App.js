@@ -1,15 +1,17 @@
 import './App.css';
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 
 function App() {
   const counter = useSelector((state) => state.counter)
 
-  const increment = () => {
+  const dispatch = useDispatch()
 
+  const increment = () => {
+    dispatch({type: 'INC'})
   }
 
   const decrement = () => {
-
+    dispatch({type: 'DEC'})
   }
 
   return (
