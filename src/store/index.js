@@ -1,7 +1,7 @@
 import {createStore} from 'redux'
 
-const reducerFunction = (state = {counter: 0}, action) => {
-
+const reducerFunction = (state = {counter: 10}, action) => {
+    return state
 }
 
 const store = createStore(reducerFunction)
