@@ -10,6 +10,7 @@ const cartSlice = createSlice({
     reducers: {
         addToCart(state, action) {
             const newItem = action.payload
+
             // check item is already there
             const existingItem = state.itemsList.find((item) => item.id === newItem.id)
 
@@ -32,6 +33,19 @@ const cartSlice = createSlice({
         },
 
         removeFromCart(state, action) {
+            // 这里由于只接收了一个id 在 CartItem.js
+            const id = action.payload
+
+            const existingItem = state.itemsList.find((item) => item.id === id)
+
+            if (existingItem.quantity === 1) {
+                state.itemsList = state.itemsList.filter(item => item.id !== id)
+                state.totalQuantity--
+            } else {
+                existingItem.quantity--
+                existingItem.totalPrice -= existingItem.price
+                state.totalQuantity--
+            }
 
         },
 
