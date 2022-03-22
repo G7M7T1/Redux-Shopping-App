@@ -5,20 +5,27 @@ const cartSlice = createSlice({
     initialState: {
         itemsList: [],
         totalQuantity: 0,
-        showCart: false
+        showCart: false,
+        change: false
     },
     reducers: {
+        replaceData(state, action) {
+            state.totalQuantity = action.payload.totalQuantity
+            state.itemsList = action.payload.itemsList
+        },
+
         addToCart(state, action) {
+            state.change = true
             const newItem = action.payload
 
             // check item is already there
             const existingItem = state.itemsList.find((item) => item.id === newItem.id)
 
             if (existingItem) {
-                existingItem.quantity ++
+                existingItem.quantity++
                 existingItem.totalPrice += newItem.price
 
-                state.totalQuantity ++
+                state.totalQuantity++
             } else {
                 state.itemsList.push({
                     id: newItem.id,
@@ -28,11 +35,12 @@ const cartSlice = createSlice({
                     name: newItem.name
                 })
 
-            state.totalQuantity ++
+                state.totalQuantity++
             }
         },
 
         removeFromCart(state, action) {
+            state.change = true
             // 这里由于只接收了一个id 在 CartItem.js
             const id = action.payload
 
